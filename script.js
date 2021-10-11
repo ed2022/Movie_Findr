@@ -22,11 +22,15 @@ function displayData(data){
         movieCard.appendChild(moviePoster);
         moviePosterImg = document.createElement("img");
         moviePoster.appendChild(moviePosterImg);
+        var posterUrl = ""
 
         var movieCardHeader = document.createElement("div");
         movieCardHeader.setAttribute("class", "card-header");
-        movieCardHeader.textContent = data[i].title;
+        var movieCardHeaderTitle = document.createElement("div");
+        movieCardHeaderTitle.setAttribute("class", "card-header-title");
+        movieCardHeaderTitle.textContent = data[i].title;
         movieCard.appendChild(movieCardHeader);
+        movieCardHeader.appendChild(movieCardHeaderTitle);
     }
 }
 
