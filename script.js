@@ -22,7 +22,8 @@ function displayData(data){
         movieCard.appendChild(moviePoster);
         moviePosterImg = document.createElement("img");
         moviePoster.appendChild(moviePosterImg);
-        var posterUrl = ""
+        var posterUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg"
+        moviePosterImg.setAttribute("src", posterUrl);
 
         var movieCardHeader = document.createElement("div");
         movieCardHeader.setAttribute("class", "card-header");
