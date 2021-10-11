@@ -1,0 +1,10 @@
+html {
+    background: lavender;
+    font-family: "Segoe UI",Arial,sans-serif;
+}
+header{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding: 25px;
+}
