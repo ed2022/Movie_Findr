@@ -22,8 +22,10 @@ function displayData(data){
         
         moviePoster = document.createElement("figure");
         movieCard.appendChild(moviePoster);
+        movieCard.setAttribute("alt","Figure");
         moviePosterImg = document.createElement("img");
         moviePoster.appendChild(moviePosterImg);
+        moviePoster.setAttribute("alt","Movie Poster");
         var posterUrl = "http://developer.tmsimg.com/" + data[i].preferredImage.uri + "?api_key=nsptwt2vhe2syy8gx8n53fup"
         moviePosterImg.setAttribute("src", posterUrl);
 
