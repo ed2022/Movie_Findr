@@ -95,8 +95,4 @@ function getApi() {
         displayData(data)
     })
 }
-
-
-
-
 zipcodeSearchBttn.addEventListener("click", getApi);
