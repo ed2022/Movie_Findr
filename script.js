@@ -3,9 +3,12 @@ var zipcodeSearchBttn = document.getElementById("zipcode-search-bttn");
 var movieCardSection = document.querySelector("#movie-card-section");
 var userZipcode;
 var modal = document.querySelector(".modal")
+var searchQueryArray = []
 
 var currentDay = moment().format("YYYY-MM-DD");
 var movieShowtimeTable = document.getElementById("movie-showtime-info");
+var moviePosterArray = document.getElementsByTagName("img");
+var movieImgPathArray = []
 
 console.log(currentDay)
 
@@ -22,63 +25,96 @@ function displayData(data){
         
         moviePoster = document.createElement("figure");
         movieCard.appendChild(moviePoster);
+        moviePoster.classList.add("image",  "is-240x360");
         moviePosterImg = document.createElement("img");
         moviePoster.appendChild(moviePosterImg);
-        var posterUrl = "http://developer.tmsimg.com/" + data[i].preferredImage.uri + "?api_key=nsptwt2vhe2syy8gx8n53fup"
-        moviePosterImg.setAttribute("src", posterUrl);
+        
 
         var movieCardHeader = document.createElement("div");
         movieCardHeader.setAttribute("class", "card-header");
         var movieCardHeaderTitle = document.createElement("div");
         movieCardHeaderTitle.setAttribute("class", "card-header-title");
+        movieCardHeaderTitle.classList.add("is-centered")
         movieCardHeaderTitle.textContent = data[i].title;
         movieCard.appendChild(movieCardHeader);
         movieCardHeader.appendChild(movieCardHeaderTitle);
+        var movieCardFooter = document.createElement("div");
+        movieCardFooter.classList.add("card-footer");
+        movieCard.appendChild(movieCardFooter);
 
         var selectMovieButton = document.createElement("button");
         selectMovieButton.setAttribute("class", "button");
         selectMovieButton.classList.add("movie-select");
         selectMovieButton.innerHTML = "Pick this Movie!";
-        movieCard.appendChild(selectMovieButton);
+        movieCardFooter.appendChild(selectMovieButton);
 
         var allSelectButtons = document.querySelectorAll(".movie-select");
+
         allSelectButtons[i].addEventListener('click', function(i) {
             console.log("you clicked element #" + i);
             openModal();
+            for (var j = 0; j < data[i].showtimes.length; i++){
+                var tableRow = document.createElement("tr");
+                movieShowtimeTable.appendChild(tableRow);
+                var selectedTheater = document.createElement("th");
+                var movieShowtime = document.createElement("th");
+
+                tableRow.appendChild(selectedTheater);
+                tableRow.appendChild(movieShowtime);
+
+                selectedTheater.textContent = data[i].showtimes[j].theatre.name;
+                movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
+                }
             document.querySelector(".modal-card-title").textContent = data[i].title; 
         }.bind(null, i));
 
-        var tableRow = document.createElement("tr");
-        movieShowtimeTable.appendChild(tableRow);
-        var selectedTheater = document.createElement("th");
-        var movieShowtime = document.createElement("th");
 
-        tableRow.appendChild(selectedTheater);
-        tableRow.appendChild(movieShowtime);
 
-        selectedTheater.textContent = data[i].showtimes[0].theatre.name;
-        movieShowtime.textContent = moment(data[i].showtimes[0].dateTime).format("h:mma")
-    
+        var headerArray = document.querySelectorAll(".card-header")
+        var movieSearchQuery = headerArray[i].textContent
+        searchQueryArray.push(movieSearchQuery);
+        movieSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key=9fb4cfc619ac245c369683b5ddd346ed&language=en-US&query=" + searchQueryArray[i] + "&page=1&include_adult=false"
+        
+
+        
+        
+        var tmdbCall = fetch(movieSearchUrl)
+            .then (function (response) {
+                return response.json()
+            })
+            .then (function (data) {
+                return data.results[0].poster_path
+            })
+        var tmdbObject = async () => {
+            var path = await tmdbCall
+            var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
+            movieImgPathArray.push(posterUrl)
+        }
+        tmdbObject()
+        console.log(movieImgPathArray)
+        // moviePosterArray[0].setAttribute("src", movieImgPathArray[0]);
+        console.log(moviePosterArray[0])
+        console.log(movieImgPathArray[0])
+        
+            // console.log(tmdbObject());
+            // var posterUrl = "https://image.tmdb.org/t/p/original/" + tmdbObject();
+            // moviePosterArray[i].setAttribute("src", posterUrl);
+            
+
     }
-
+    console.log(searchQueryArray)
     var closeModalBttn = document.querySelector(".delete")
     closeModalBttn.addEventListener("click", function() {
        modal.classList.remove("is-active");
    })
 
-}
 
+}
 
 function openModal() {
     console.log("hi");
     modal.classList.add("is-active");
 
-}
-
-function displayModalInfo() {
-    for (var i = 0; i <movieCardAll.length; i++) {
-
-    }
 }
 
 function getApi() {
@@ -95,4 +131,8 @@ function getApi() {
         displayData(data)
     })
 }
+
+
+
+
 zipcodeSearchBttn.addEventListener("click", getApi);
