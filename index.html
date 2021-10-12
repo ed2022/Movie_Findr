@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,16 +9,18 @@
     <link rel="stylesheet" href="style.css">
     <title>Movie Finder V2</title>
 </head>
+
 <body>
-    <div class="container">
-        <div class="section">
-            <div class="hero-body">
-                <p class="title">Movie Finder</p>
-                <p class="subtitle">Find movies near you!</p>
-            </div>
+    <header class="hero is-white is-full">
+        <div class="block">
+            <p class="title is-1">Movie Findr</p>
+            <p class="subtitle is-4">Last minute ideas!</p>
         </div>
+    </header>
+    <!--Setting this seperately-->
+    <div class="container">
         <div class="level">
-            <div class="level-left">
+            <div class="level">
                 <div class="level-item">
                     <input class="input" type="text" placeholder="Enter Zipcode Here" id="user-zipcode">
                     <input type="submit" class="button" value="Find Movie Near Me" id="zipcode-search-bttn">
@@ -46,14 +49,12 @@
                       </tbody>
                     </table>
                   </div>
-              </section>
+                </section>
             </div>
-          </div>
+        </div>
     </div>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
-    ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

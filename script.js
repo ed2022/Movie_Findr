@@ -58,18 +58,13 @@ function displayData(data){
 
         selectedTheater.textContent = data[i].showtimes[0].theatre.name;
         movieShowtime.textContent = moment(data[i].showtimes[0].dateTime).format("h:mma")
-        
-
-
-        
-
+    
     }
 
     var closeModalBttn = document.querySelector(".delete")
     closeModalBttn.addEventListener("click", function() {
        modal.classList.remove("is-active");
    })
-
 
 }
 
