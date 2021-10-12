@@ -67,10 +67,7 @@ function displayData(data){
     closeModalBttn.addEventListener("click", function() {
        modal.classList.remove("is-active");
    })
-
 }
-
-
 function openModal() {
     console.log("hi");
     modal.classList.add("is-active");
