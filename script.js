@@ -5,6 +5,7 @@ var userZipcode;
 var modal = document.querySelector(".modal")
 
 var currentDay = moment().format("YYYY-MM-DD");
+var movieShowtimeTable = document.getElementById("movie-showtime-info");
 
 console.log(currentDay)
 
@@ -23,7 +24,7 @@ function displayData(data){
         movieCard.appendChild(moviePoster);
         moviePosterImg = document.createElement("img");
         moviePoster.appendChild(moviePosterImg);
-        var posterUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg"
+        var posterUrl = "http://developer.tmsimg.com/" + data[i].preferredImage.uri + "?api_key=nsptwt2vhe2syy8gx8n53fup"
         moviePosterImg.setAttribute("src", posterUrl);
 
         var movieCardHeader = document.createElement("div");
@@ -44,16 +45,23 @@ function displayData(data){
         allSelectButtons[i].addEventListener('click', function(i) {
             console.log("you clicked element #" + i);
             openModal();
-            document.querySelector(".modal-card-title").textContent = data[i].title;
-
+            document.querySelector(".modal-card-title").textContent = data[i].title; 
         }.bind(null, i));
 
+        var tableRow = document.createElement("tr");
+        movieShowtimeTable.appendChild(tableRow);
+        var selectedTheater = document.createElement("th");
+        var movieShowtime = document.createElement("th");
 
-        // movieCardSection.children[i].onclick = function() {
-        //     console.log(i);
-        //     openModal();
-            
-        // }
+        tableRow.appendChild(selectedTheater);
+        tableRow.appendChild(movieShowtime);
+
+        selectedTheater.textContent = data[i].showtimes[0].theatre.name;
+        movieShowtime.textContent = moment(data[i].showtimes[0].dateTime).format("h:mma")
+        
+
+
+        
 
     }
 
@@ -80,7 +88,7 @@ function displayModalInfo() {
 
 function getApi() {
     getZipcode()
-    var graceNoteUrl = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=2h2a8gu4hfm3rwc3y963cmkm"
+    var graceNoteUrl = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=nsptwt2vhe2syy8gx8n53fup"
 
     fetch(graceNoteUrl)
     .then(function (response) {
