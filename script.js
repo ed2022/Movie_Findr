@@ -2,6 +2,7 @@ var userZipcodeField = document.getElementById("user-zipcode");
 var zipcodeSearchBttn = document.getElementById("zipcode-search-bttn");
 var movieCardSection = document.querySelector("#movie-card-section");
 var userZipcode;
+var modal = document.querySelector(".modal")
 
 var currentDay = moment().format("YYYY-MM-DD");
 
@@ -32,12 +33,49 @@ function displayData(data){
         movieCardHeaderTitle.textContent = data[i].title;
         movieCard.appendChild(movieCardHeader);
         movieCardHeader.appendChild(movieCardHeaderTitle);
+
+        var selectMovieButton = document.createElement("button");
+        selectMovieButton.setAttribute("class", "button");
+        selectMovieButton.classList.add("movie-select");
+        selectMovieButton.innerHTML = "Pick this Movie!";
+        movieCard.appendChild(selectMovieButton);
+
+        var allSelectButtons = document.querySelectorAll(".movie-select");
+        allSelectButtons[i].addEventListener('click', function(i) {
+            console.log("you clicked element #" + i);
+            openModal();
+            document.querySelector(".modal-card-title").textContent = data[i].title;
+
+        }.bind(null, i));
+        // movieCardSection.children[i].onclick = function() {
+        //     console.log(i);
+        //     openModal();}  
+    }
+
+    var closeModalBttn = document.querySelector(".delete")
+    closeModalBttn.addEventListener("click", function() {
+       modal.classList.remove("is-active");
+   })
+
+
+}
+
+
+function openModal() {
+    console.log("hi");
+    modal.classList.add("is-active");
+
+}
+
+function displayModalInfo() {
+    for (var i = 0; i <movieCardAll.length; i++) {
+
     }
 }
 
 function getApi() {
     getZipcode()
-    var graceNoteUrl = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=2h2a8gu4hfm3rwc3y963cmkm"
+    var graceNoteUrl = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=nsptwt2vhe2syy8gx8n53fup"
 
     fetch(graceNoteUrl)
     .then(function (response) {
@@ -49,4 +87,8 @@ function getApi() {
         displayData(data)
     })
 }
+
+
+
+
 zipcodeSearchBttn.addEventListener("click", getApi);
