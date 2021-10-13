@@ -28,9 +28,9 @@ function displayData(data){
         moviePoster.classList.add("image",  "is-240x360");
         moviePosterImg = document.createElement("img");
     
+        
 
-
-        // moviePoster.appendChild(moviePosterImg);
+        moviePoster.appendChild(moviePosterImg);
         
 
         var movieCardHeader = document.createElement("div");
@@ -79,32 +79,33 @@ function displayData(data){
         movieSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key=9fb4cfc619ac245c369683b5ddd346ed&language=en-US&query=" + searchQueryArray[i] + "&page=1&include_adult=false"
         
 
-        
+
         
         var tmdbCall = fetch(movieSearchUrl)
             .then (function (response) {
                 return response.json()
             })
             .then (function (data) {
-                return data.results[0].poster_path
+                console.log(data.results)
+                var path = data.results[0].poster_path
+                var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
+                movieImgPathArray.push(posterUrl);
+                console.log(moviePosterArray);
+                console.log(movieImgPathArray);
+                loopPosters()
             })
-        var tmdbObject = async (i) => {
-            var path = await tmdbCall
-            var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
-            if (posterUrl == "404") {
-                posterUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg.webp"
-                movieImgPathArray.push(posterUrl)
-                console.log(movieImgPathArray[i])
-            } else {
-            movieImgPathArray.push(posterUrl)
-            console.log(movieImgPathArray[i])
-            } 
-            moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
-            
-            
-        }
-        tmdbObject(i)
-        moviePoster.appendChild(moviePosterImg);
+            .catch (function (error) {
+                console.log(error);
+                var errorUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg.webp"
+                movieImgPathArray.push(errorUrl)
+                loopPosters();
+            })
+            function loopPosters() {
+                for (var i = 0; i <= movieImgPathArray.length; i ++){
+                moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
+                }
+            }
+
             
 
     }
