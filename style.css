@@ -8,3 +8,29 @@ html {
     margin-bottom: 30px;
     padding: 25px;
 }
+
+#movie-card-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1 1 30%;
+    margin: 20px 20px;
+}
+
+.card-footer {
+    justify-content: center;
+}
+
+.movie-select {
+    margin: 10px 0px;
+}
+
+@media (max-width: 800px) {
+    .card {
+        flex: 1 1 80%;
+    }
+}
+    
+
