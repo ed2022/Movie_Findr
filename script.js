@@ -68,7 +68,6 @@ function displayData(data){
 
                 selectedTheater.textContent = data[i].showtimes[j].theatre.name;
                 movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
-                // document.querySelector(".modal-card-title").textContent = data[i].title; 
                 }
             }
 
@@ -131,7 +130,7 @@ function openModal() {
 
 function getApi() {
     getZipcode()
-    var graceNoteUrl = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=nsptwt2vhe2syy8gx8n53fup"
+    var graceNoteUrl = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=nsptwt2vhe2syy8gx8n53fup"
 
     fetch(graceNoteUrl)
     .then(function (response) {
