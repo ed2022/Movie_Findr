@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header class="hero is-white is-full" id = titleID>
+    <header class="hero is-full" id = titleID>
         <div class="block">
             <p class="title is-1">Movie Findr</p>
             <p class="subtitle is-4">Last minute ideas!</p>
@@ -19,11 +19,13 @@
     </header>
     <!--Setting this seperately-->
     <div class="container">
-        <div class="level">
+        <div class="section" id="search-container">
             <div class="level">
-                <div class="level-item">
-                    <input class="input" type="text" placeholder="Enter Zipcode Here" id="user-zipcode">
-                    <input type="submit" class="button" value="Find Movie Near Me" id="zipcode-search-bttn">
+                <div class="level">
+                    <div class="level-item search-bar">
+                        <input class="input" type="text" placeholder="Enter Zipcode Here" id="user-zipcode">
+                        <input type="submit" class="button" value="Show Movies Near Me" id="zipcode-search-bttn">
+                    </div>
                 </div>
             </div>
         </div>

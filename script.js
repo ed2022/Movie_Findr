@@ -10,14 +10,14 @@ var movieShowtimeTable = document.getElementById("movie-showtime-info");
 var moviePosterArray = document.getElementsByTagName("img");
 var movieImgPathArray = []
 
-console.log(currentDay)
 
 function getZipcode() {
-    userZipcode = userZipcodeField.value
-    console.log(userZipcode);
+    userZipcode = userZipcodeField.value;
 }
 
 function displayData(data){
+
+    movieCardSection.innerHTML = " ";
     for (var i = 0; i < data.length; i++) {
         var movieCard = document.createElement("div");
         movieCard.setAttribute("class", "card");
@@ -27,9 +27,6 @@ function displayData(data){
         movieCard.appendChild(moviePoster);
         moviePoster.classList.add("image",  "is-240x360");
         moviePosterImg = document.createElement("img");
-    
-        
-
         moviePoster.appendChild(moviePosterImg);
         
 
@@ -55,8 +52,12 @@ function displayData(data){
 
         allSelectButtons[i].addEventListener('click', function(i) {
             console.log("you clicked element #" + i);
+            console.log(data)
+
+            movieShowtimeTable.innerHTML = "";
             openModal();
-            for (var j = 0; j < data[i].showtimes.length; i++){
+            function appendShowtimes(i) {
+                for (var j = 0; j < data[i].showtimes.length; j++){
                 var tableRow = document.createElement("tr");
                 movieShowtimeTable.appendChild(tableRow);
                 var selectedTheater = document.createElement("th");
@@ -67,8 +68,16 @@ function displayData(data){
 
                 selectedTheater.textContent = data[i].showtimes[j].theatre.name;
                 movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
+                // document.querySelector(".modal-card-title").textContent = data[i].title; 
                 }
-            document.querySelector(".modal-card-title").textContent = data[i].title; 
+            }
+
+            function setTitle(i) {
+                document.querySelector(".modal-card-title").textContent = data[i].title;
+            }
+            setTitle(i)
+            appendShowtimes(i)
+             
         }.bind(null, i));
 
 
@@ -76,26 +85,19 @@ function displayData(data){
         var headerArray = document.querySelectorAll(".card-header")
         var movieSearchQuery = headerArray[i].textContent
         searchQueryArray.push(movieSearchQuery);
+        
         movieSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key=9fb4cfc619ac245c369683b5ddd346ed&language=en-US&query=" + searchQueryArray[i] + "&page=1&include_adult=false"
-        
-
-
-        
-        var tmdbCall = fetch(movieSearchUrl)
+        fetch(movieSearchUrl)
             .then (function (response) {
                 return response.json()
             })
             .then (function (data) {
-                console.log(data.results)
                 var path = data.results[0].poster_path
                 var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
                 movieImgPathArray.push(posterUrl);
-                console.log(moviePosterArray);
-                console.log(movieImgPathArray);
                 loopPosters()
             })
             .catch (function (error) {
-                console.log(error);
                 var errorUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg.webp"
                 movieImgPathArray.push(errorUrl)
                 loopPosters();
@@ -105,24 +107,27 @@ function displayData(data){
                 moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
                 }
             }
-
-            
-
     }
-    console.log(searchQueryArray)
-    var closeModalBttn = document.querySelector(".delete")
-    closeModalBttn.addEventListener("click", function() {
-       modal.classList.remove("is-active");
-   })
-
-
+    movieImgPathArray = []
 }
+
+
+
+
+// Modal controls/functions
+
+var closeModalBttn = document.querySelector(".delete");
+closeModalBttn.addEventListener("click", function() {
+modal.classList.remove("is-active");
+});
 
 function openModal() {
-    console.log("hi");
     modal.classList.add("is-active");
-
 }
+
+
+
+// First api call retrieves data for theaters within a 10 mile radius of users zipcode
 
 function getApi() {
     getZipcode()
