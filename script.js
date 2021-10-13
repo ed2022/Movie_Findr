@@ -17,21 +17,21 @@ function getZipcode() {
     console.log(userZipcode);
 }
 
-function displayData(data) {
+function displayData(data){
     for (var i = 0; i < data.length; i++) {
         var movieCard = document.createElement("div");
         movieCard.setAttribute("class", "card");
         movieCardSection.appendChild(movieCard)
-
+        
         moviePoster = document.createElement("figure");
         movieCard.appendChild(moviePoster);
-        moviePoster.classList.add("image", "is-240x360");
+        moviePoster.classList.add("image",  "is-240x360");
         moviePosterImg = document.createElement("img");
-
+    
 
 
         // moviePoster.appendChild(moviePosterImg);
-
+        
 
         var movieCardHeader = document.createElement("div");
         movieCardHeader.setAttribute("class", "card-header");
@@ -53,10 +53,11 @@ function displayData(data) {
 
         var allSelectButtons = document.querySelectorAll(".movie-select");
 
-        allSelectButtons[i].addEventListener('click', function (i) {
+        allSelectButtons[i].addEventListener('click', function(i) {
+
             console.log("you clicked element #" + i);
             openModal();
-            for (var j = 0; j < data[i].showtimes.length; i++) {
+            for (var j = 0; j < data[i].showtimes.length; i++){
                 var tableRow = document.createElement("tr");
                 movieShowtimeTable.appendChild(tableRow);
                 var selectedTheater = document.createElement("th");
@@ -67,8 +68,8 @@ function displayData(data) {
 
                 selectedTheater.textContent = data[i].showtimes[j].theatre.name;
                 movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
-            }
-            document.querySelector(".modal-card-title").textContent = data[i].title;
+                }
+            document.querySelector(".modal-card-title").textContent = data[i].title; 
         }.bind(null, i));
 
 
@@ -77,44 +78,45 @@ function displayData(data) {
         var movieSearchQuery = headerArray[i].textContent
         searchQueryArray.push(movieSearchQuery);
         movieSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key=9fb4cfc619ac245c369683b5ddd346ed&language=en-US&query=" + searchQueryArray[i] + "&page=1&include_adult=false"
+        
 
-
-
+        
+        
         var tmdbCall = fetch(movieSearchUrl)
-            .then(function (response) {
+            .then (function (response) {
                 return response.json()
             })
-            .then(function (data) {
+            .then (function (data) {
                 return data.results[0].poster_path
             })
         var tmdbObject = async (i) => {
             var path = await tmdbCall
             var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
-
-            movieImgPathArray.push(posterUrl)
-            console.log(movieImgPathArray[i])
-
-            if (posterUrl === undefined) {
+            if (posterUrl === "undefined") {
                 posterUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg.webp"
                 movieImgPathArray.push(posterUrl)
                 console.log(movieImgPathArray[i])
-            }
+            } else {
+            movieImgPathArray.push(posterUrl)
+            console.log(movieImgPathArray[i])
+            } 
+            moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
+            
+            
         }
-        moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
-
+        tmdbObject(i)
+        moviePoster.appendChild(moviePosterImg);
+            
 
     }
-    tmdbObject(i)
-    moviePoster.appendChild(moviePosterImg);
+    console.log(searchQueryArray)
+    var closeModalBttn = document.querySelector(".delete")
+    closeModalBttn.addEventListener("click", function() {
+       modal.classList.remove("is-active");
+   })
 
 
 }
-console.log(searchQueryArray)
-var closeModalBttn = document.querySelector(".delete")
-closeModalBttn.addEventListener("click", function () {
-    modal.classList.remove("is-active");
-})
-
 
 function openModal() {
     console.log("hi");
@@ -127,14 +129,14 @@ function getApi() {
     var graceNoteUrl = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=nsptwt2vhe2syy8gx8n53fup"
 
     fetch(graceNoteUrl)
-        .then(function (response) {
-            return response.json()
-        })
-        .then(function (data) {
-            console.log(data)
+    .then(function (response) {
+        return response.json()
+    })
+    .then(function (data) {
+        console.log(data)
 
-            displayData(data)
-        })
+        displayData(data)
+    })
 }
 
 
