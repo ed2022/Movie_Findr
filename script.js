@@ -15,20 +15,20 @@ function getZipcode() {
     userZipcode = userZipcodeField.value;
 }
 
-function displayData(data){
+function displayData(data) {
 
     movieCardSection.innerHTML = " ";
     for (var i = 0; i < data.length; i++) {
         var movieCard = document.createElement("div");
         movieCard.setAttribute("class", "card");
         movieCardSection.appendChild(movieCard)
-        
+
         moviePoster = document.createElement("figure");
         movieCard.appendChild(moviePoster);
-        moviePoster.classList.add("image",  "is-240x360");
+        moviePoster.classList.add("image", "is-240x360");
         moviePosterImg = document.createElement("img");
         moviePoster.appendChild(moviePosterImg);
-        
+
 
         var movieCardHeader = document.createElement("div");
         movieCardHeader.setAttribute("class", "card-header");
@@ -50,24 +50,24 @@ function displayData(data){
 
         var allSelectButtons = document.querySelectorAll(".movie-select");
 
-        allSelectButtons[i].addEventListener('click', function(i) {
+        allSelectButtons[i].addEventListener('click', function (i) {
             console.log("you clicked element #" + i);
             console.log(data)
 
             movieShowtimeTable.innerHTML = "";
             openModal();
             function appendShowtimes(i) {
-                for (var j = 0; j < data[i].showtimes.length; j++){
-                var tableRow = document.createElement("tr");
-                movieShowtimeTable.appendChild(tableRow);
-                var selectedTheater = document.createElement("th");
-                var movieShowtime = document.createElement("th");
+                for (var j = 0; j < data[i].showtimes.length; j++) {
+                    var tableRow = document.createElement("tr");
+                    movieShowtimeTable.appendChild(tableRow);
+                    var selectedTheater = document.createElement("th");
+                    var movieShowtime = document.createElement("th");
 
-                tableRow.appendChild(selectedTheater);
-                tableRow.appendChild(movieShowtime);
+                    tableRow.appendChild(selectedTheater);
+                    tableRow.appendChild(movieShowtime);
 
-                selectedTheater.textContent = data[i].showtimes[j].theatre.name;
-                movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
+                    selectedTheater.textContent = data[i].showtimes[j].theatre.name;
+                    movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
                 }
             }
 
@@ -76,7 +76,7 @@ function displayData(data){
             }
             setTitle(i)
             appendShowtimes(i)
-             
+
         }.bind(null, i));
 
 
@@ -84,32 +84,32 @@ function displayData(data){
         var headerArray = document.querySelectorAll(".card-header")
         var movieSearchQuery = headerArray[i].textContent
         searchQueryArray.push(movieSearchQuery);
-        
+
         movieSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key=9fb4cfc619ac245c369683b5ddd346ed&language=en-US&query=" + searchQueryArray[i] + "&page=1&include_adult=false"
         fetch(movieSearchUrl)
-            .then (function (response) {
+            .then(function (response) {
                 return response.json()
             })
-            .then (function (data) {
+            .then(function (data) {
                 var path = data.results[0].poster_path
                 var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
                 movieImgPathArray.push(posterUrl);
                 loopPosters()
             })
-            .catch (function (error) {
+            .catch(function (error) {
                 var errorUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg.webp"
                 movieImgPathArray.push(errorUrl)
                 loopPosters();
             })
-            function loopPosters() {
-                for (var i = 0; i <= movieImgPathArray.length; i ++){
+        function loopPosters() {
+            for (var i = 0; i <= movieImgPathArray.length; i++) {
                 moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
-                }
             }
-           
+        }
+
     }
     movieImgPathArray = []
-    
+
 }
 
 
@@ -118,8 +118,8 @@ function displayData(data){
 // Modal controls/functions
 
 var closeModalBttn = document.querySelector(".delete");
-closeModalBttn.addEventListener("click", function() {
-modal.classList.remove("is-active");
+closeModalBttn.addEventListener("click", function () {
+    modal.classList.remove("is-active");
 });
 
 function openModal() {
@@ -131,18 +131,25 @@ function openModal() {
 // First api call retrieves data for theaters within a 10 mile radius of users zipcode
 
 function getApi() {
+
+    var localStorageData = JSON.parse(localStorage.getItem('data'));
     getZipcode()
     var graceNoteUrl = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=2h2a8gu4hfm3rwc3y963cmkm"
 
-    fetch(graceNoteUrl)
-    .then(function (response) {
-        return response.json()
-    })
-    .then(function (data) {
-        console.log(data)
-
-        displayData(data)
-    })
+    if (localStorageData) {
+        displayData(localStorageData)
+    } else {
+        fetch(graceNoteUrl)
+            .then(function (response) {
+                console.log("made api call")
+                return response.json()
+            })
+            .then(function (data) {
+                console.log(data)
+                localStorage.setItem('data', JSON.stringify(data))
+                displayData(data)
+            })
+    } 
 }
 
 
