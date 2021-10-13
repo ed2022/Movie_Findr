@@ -18,16 +18,13 @@ header{
     padding: 25px;
 }
 
-.search-bar {
-    margin-left: 20px;
-}
+
 
 #search-container {
     padding: 10px 3rem;
 }
 
 #movie-card-section {
-
     display: flex;
     flex-wrap: wrap;
 }
@@ -35,10 +32,24 @@ header{
 .card {
     flex: 1 1 30%;
     margin: 20px 20px;
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
+img:hover {
+    opacity: 70%;
+}
+
+.card-header {
+    box-shadow: none;
+}
 .card-footer {
     justify-content: center;
+    border-top: none;
 }
 
 .movie-select {
@@ -49,7 +60,9 @@ header{
     margin-bottom: 0px;
 }
 
-
+.level {
+    justify-content: center;
+}
 
 @media (max-width: 800px) {
     .card {

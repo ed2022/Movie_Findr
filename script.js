@@ -44,8 +44,8 @@ function displayData(data){
 
         var selectMovieButton = document.createElement("button");
         selectMovieButton.setAttribute("class", "button");
-        selectMovieButton.classList.add("movie-select");
-        selectMovieButton.innerHTML = "Pick this Movie!";
+        selectMovieButton.classList.add("movie-select", "is-dark");
+        selectMovieButton.innerHTML = "Today's Showtimes";
         movieCardFooter.appendChild(selectMovieButton);
 
         var allSelectButtons = document.querySelectorAll(".movie-select");
@@ -106,8 +106,10 @@ function displayData(data){
                 moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
                 }
             }
+           
     }
     movieImgPathArray = []
+    
 }
 
 
@@ -130,7 +132,7 @@ function openModal() {
 
 function getApi() {
     getZipcode()
-    var graceNoteUrl = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=nsptwt2vhe2syy8gx8n53fup"
+    var graceNoteUrl = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + currentDay + "&zip=" + userZipcode + "&radius=10&api_key=2h2a8gu4hfm3rwc3y963cmkm"
 
     fetch(graceNoteUrl)
     .then(function (response) {
