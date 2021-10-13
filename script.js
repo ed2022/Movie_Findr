@@ -106,8 +106,10 @@ function displayData(data){
                 moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
                 }
             }
+           
     }
     movieImgPathArray = []
+    
 }
 
 

@@ -18,16 +18,13 @@ header{
     padding: 25px;
 }
 
-.search-bar {
-    margin-left: 20px;
-}
+
 
 #search-container {
     padding: 10px 3rem;
 }
 
 #movie-card-section {
-
     display: flex;
     flex-wrap: wrap;
 }
@@ -41,6 +38,10 @@ header{
     -webkit-backdrop-filter: blur( 4px );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+img:hover {
+    opacity: 70%;
 }
 
 .card-header {
@@ -59,7 +60,9 @@ header{
     margin-bottom: 0px;
 }
 
-
+.level {
+    justify-content: center;
+}
 
 @media (max-width: 800px) {
     .card {
