@@ -27,7 +27,10 @@ function displayData(data){
         movieCard.appendChild(moviePoster);
         moviePoster.classList.add("image",  "is-240x360");
         moviePosterImg = document.createElement("img");
-        moviePoster.appendChild(moviePosterImg);
+    
+
+
+        // moviePoster.appendChild(moviePosterImg);
         
 
         var movieCardHeader = document.createElement("div");
@@ -85,20 +88,23 @@ function displayData(data){
             .then (function (data) {
                 return data.results[0].poster_path
             })
-        var tmdbObject = async () => {
+        var tmdbObject = async (i) => {
             var path = await tmdbCall
             var posterUrl = "https://image.tmdb.org/t/p/original/" + path;
+            if (posterUrl == "404") {
+                posterUrl = "https://wwfhc.org/wp-content/uploads/2020/12/provider-photo-placeholder-240x360-1.jpg.webp"
+                movieImgPathArray.push(posterUrl)
+                console.log(movieImgPathArray[i])
+            } else {
             movieImgPathArray.push(posterUrl)
+            console.log(movieImgPathArray[i])
+            } 
+            moviePosterArray[i].setAttribute("src", movieImgPathArray[i]);
+            
+            
         }
-        tmdbObject()
-        console.log(movieImgPathArray)
-        // moviePosterArray[0].setAttribute("src", movieImgPathArray[0]);
-        console.log(moviePosterArray[0])
-        console.log(movieImgPathArray[0])
-        
-            // console.log(tmdbObject());
-            // var posterUrl = "https://image.tmdb.org/t/p/original/" + tmdbObject();
-            // moviePosterArray[i].setAttribute("src", posterUrl);
+        tmdbObject(i)
+        moviePoster.appendChild(moviePosterImg);
             
 
     }
