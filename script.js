@@ -1,3 +1,4 @@
+//Declaring Variables - global 
 var userZipcodeField = document.getElementById("user-zipcode");
 var zipcodeSearchBttn = document.getElementById("zipcode-search-bttn");
 var movieCardSection = document.querySelector("#movie-card-section");
@@ -10,7 +11,7 @@ var movieShowtimeTable = document.getElementById("movie-showtime-info");
 var moviePosterArray = document.getElementsByTagName("img");
 var movieImgPathArray = []
 
-
+//Storing our main input
 function getZipcode() {
     userZipcode = userZipcodeField.value;
 }
@@ -69,17 +70,16 @@ function displayData(data) {
                     selectedTheater.textContent = data[i].showtimes[j].theatre.name;
                     movieShowtime.textContent = moment(data[i].showtimes[j].dateTime).format("h:mma");
                 }
-            }
+            }//displaying options in the main body 
 
             function setTitle(i) {
                 document.querySelector(".modal-card-title").textContent = data[i].title;
             }
             setTitle(i)
             appendShowtimes(i)
-
         }.bind(null, i));
-
-
+      
+      
 
         var headerArray = document.querySelectorAll(".card-header")
         var movieSearchQuery = headerArray[i].textContent
@@ -109,7 +109,6 @@ function displayData(data) {
 
     }
     movieImgPathArray = []
-
 }
 
 
@@ -125,8 +124,6 @@ closeModalBttn.addEventListener("click", function () {
 function openModal() {
     modal.classList.add("is-active");
 }
-
-
 
 // First api call retrieves data for theaters within a 10 mile radius of users zipcode
 

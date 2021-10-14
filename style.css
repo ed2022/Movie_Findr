@@ -18,8 +18,6 @@ header{
     padding: 25px;
 }
 
-
-
 #search-container {
     padding: 10px 3rem;
 }
@@ -29,6 +27,7 @@ header{
     flex-wrap: wrap;
 }
 
+/* adding the card attributes */
 .card {
     flex: 1 1 30%;
     margin: 20px 20px;
@@ -63,11 +62,9 @@ img:hover {
 .level {
     justify-content: center;
 }
-
+/* fixing up the cards to be more accessable */
 @media (max-width: 800px) {
     .card {
         flex: 1 1 80%;
     }
 }
-    
-
