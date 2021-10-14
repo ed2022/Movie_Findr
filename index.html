@@ -5,55 +5,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Adding out Bulma styling sheet-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Movie Findr</title>
 </head>
 
 <body>
-    <header class="hero is-white is-full" id = titleID>
+    <!-- Making the header title and subtitle -->
+    <header class="hero is-full" id=titleID>
         <div class="block">
-            <p class="title is-1">Movie Findr</p>
-            <p class="subtitle is-4">Last minute ideas!</p>
+            <p class="title is-1">Movie Findr</p> 
+            <p class="subtitle is-4">🥰 Date Ideas Anyone?!🥰</p>
         </div>
     </header>
-    <!--Setting this seperately-->
+    <!--Setting this seperately in it's on container-->
     <div class="container">
-        <div class="level">
+        <div class="section" id="search-container">
             <div class="level">
-                <div class="level-item">
-                    <input class="input" type="text" placeholder="Enter Zipcode Here" id="user-zipcode">
-                    <input type="submit" class="button" value="Find Movie Near Me" id="zipcode-search-bttn">
+                <div class="level">
+                    <div class="level-item search-bar">
+                        <input class="input" type="text" placeholder="Enter Zipcode Here" id="user-zipcode">
+                        <input type="submit" class="button is-dark" value="Show Movies Near Me"
+                            id="zipcode-search-bttn">
+                    </div>
                 </div>
             </div>
         </div>
         <div class="section" id="movie-card-section"></div>
+        <!-- This is for the pop-up that is displayed when the button is clicked-->
         <div class="modal">
             <div class="modal-background"></div>
             <div class="modal-card">
-              <header class="modal-card-head">
-                <p class="modal-card-title"></p>
-                <button class="delete" aria-label="close"></button>
-              </header>
-              <section class="modal-card-body">
-                <div class="table-container">
-                    <table class="table is-fullwidth">
-                      <thead>
-                          <tr>
-                              <th>Theater</th>
-                              <th>Showtime</th>
-                          </tr>
-                      </thead>
-                      <tbody id="movie-showtime-info">
-                      </tbody>
-                    </table>
-                  </div>
+                <header class="modal-card-head">
+                    <p class="modal-card-title"></p>
+                    <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="table-container">
+                        <table class="table is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>Theater</th>
+                                    <th>Showtime</th>
+                                </tr>
+                            </thead>
+                            <tbody id="movie-showtime-info">
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
             </div>
         </div>
     </div>
+    <!-- Adding our script tags -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>
