@@ -77,8 +77,9 @@ function displayData(data) {
             }
             setTitle(i)
             appendShowtimes(i)
-
         }.bind(null, i));
+      
+      
 
         var headerArray = document.querySelectorAll(".card-header")
         var movieSearchQuery = headerArray[i].textContent
@@ -108,8 +109,11 @@ function displayData(data) {
 
     }
     movieImgPathArray = []
-
 }
+
+
+
+
 // Modal controls/functions
 
 var closeModalBttn = document.querySelector(".delete");
@@ -142,7 +146,7 @@ function getApi() {
                 localStorage.setItem('data', JSON.stringify(data))
                 displayData(data)
             })
-    }
+    } 
 }
 
 
